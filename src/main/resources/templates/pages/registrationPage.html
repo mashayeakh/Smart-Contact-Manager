@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<th:block th:replace="common/links/cdn::cdn"></th:block>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	<title>Title</title>
+</head>
+<style>
+    body {
+        background-color: #dee2e6;
+        /*overflow: hidden;*/
+    }
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .heading {
+        display: flex;
+        justify-content: center;
+    }
+
+    .formClass {
+        width: 600px;
+        height: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        background-color: white;
+        padding: 40px;
+        border-radius: 9px;
+        border: 1px red solid;
+    }
+
+    #about {
+        height: 140px;
+        overflow: hidden; /* Hide scrollbar */
+    }
+
+    .register-image {
+        margin-right: 10px; /* Adjust the margin as needed */
+        /*width: 80px;*/
+        height: 80px;
+        vertical-align: middle;
+    }
+
+    .display-6 {
+        display: inline-block;
+        font-weight: 400;
+        margin-top: 20px;
+    }
+
+    .btns {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        cursor: pointer;
+    }
+</style>
+<body>
+<th:block th:replace="common/navigation/navbar::navbar"></th:block>
+<div class="container">
+
+	<!--	if successfully passed -->
+	<!--	<div th:if="${not param['success']}">-->
+	<!--		<div class="alert alert-danger">-->
+	<!--			Registration failed. Please try again.-->
+	<!--		</div>-->
+	<!--	</div>-->
+
+
+	<form class="formClass" id="formId"
+	      method="post"
+	      role="form"
+	      th:action="@{/do_register}"
+	      th:object="${user}"
+	>
+		<div th:if="${param.success} ">
+			<div class="alert alert-info" style="width: 350px;" role="alert">
+				Successfully Registered!!
+			</div>
+		</div>
+		<div class="heading">
+			<img th:src="@{/images/registration.png}" alt="Registration Image" class="register-image">
+			<h5 class="display-6 text-center" style="font-weight: 400">Register Here</h5>
+		</div>
+
+		<div class="">
+			<label for="inputName" class="form-label">Name</label>
+			<input type="text"
+			       name="name"
+			       class="form-control"
+			       id="inputName"
+			       aria-describedby="nameHelp"
+			       placeholder="elon"
+			       th:value="${user.name}"
+			       th:field="*{name}"
+			>
+			<p th:errors="*{name}" class="text-danger"
+			   th:if="${#fields.hasErrors('name')}">
+			</p>
+		</div>
+		<div class="">
+			<label for="inputEmail" class="form-label">Email address</label>
+			<input type="email"
+				       name="email"
+			       class="form-control"
+			       id="inputEmail"
+			       aria-describedby="emailHelp"
+			       placeholder="elon@gmail.com"
+			       th:value="${user.email}"
+			       th:field="*{email}"
+			>
+			<p th:errors="*{email}" class="text-danger"
+			   th:if="${#fields.hasErrors('email')}">
+			</p>
+		</div>
+		<div class="">
+			<label for="inputPassword" class="form-label">Password</label>
+			<input type="password"
+			       name="password"
+			       class="form-control"
+			       id="inputPassword"
+			       placeholder="******"
+			       th:field="*{password}"
+			>
+			<p th:errors="*{password}" class="text-danger"
+			   th:if="${#fields.hasErrors('password')}">
+			</p>
+		</div>
+		<div class="">
+			<!--			<label for="desc" class="form-label">Enter something about yourself</label>-->
+			<textarea class="form-control mt-4"
+			          id="about" name="about"
+			          placeholder="Enter something about yourself"
+			          th:text="${user.about}"
+			></textarea>
+		</div>
+		<div class="btns mt-4">
+			<button type="submit"
+			        class="btn btn1 btn-success">Submit
+			</button>
+			<button type="reset"
+			        class="btn btn2 btn-warning" onclick="resetForm()">Reset
+			</button>
+		</div>
+		<div class="form-group mb-3 mt-4" style="text-align: center" >
+			<span>Already Registered?
+                   <a th:href="@{/login}">Login here</a>
+			 </span>
+		</div>
+
+	</form>
+
+</div>
+<th:block th:replace="common/navigation/footer::footer"></th:block>
+<script>
+    function resetForm() {
+        document.getElementById("formId").reset();
+    }
+</script>
+</body>
+</html>

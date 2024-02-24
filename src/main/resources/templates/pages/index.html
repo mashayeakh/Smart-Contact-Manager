@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<th:block th:replace="common/links/cdn::cdn"></th:block>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	<title th:text="${title}"></title>
+	<style>
+		.mainClass{
+            background-color: #f0efeb;
+		}
+	</style>
+</head>
+<body class="mainClass">
+<th:block th:replace="common/navigation/navbar::navbar"></th:block>
+<div class="container">
+	<h3 class="mt-5">Index Page</h3>
+
+<!--	<img th:src="@{/images/hero.jpg}" alt="Registration Image" class="register-image">-->
+</div>
+
+<th:block th:replace="common/navigation/footer::footer"></th:block>
+</body>
+</html>

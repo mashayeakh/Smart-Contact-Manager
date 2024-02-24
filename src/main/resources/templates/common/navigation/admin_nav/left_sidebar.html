@@ -1,0 +1,23 @@
+<th:block th:fragment="leftNavbar">
+
+	<div class="sideBar">
+		<a href="" th:href="@{/user/welcome-user}" class="item">
+			<i class="fa fa-home" aria-hidden="true"></i>
+			Home</a>
+		<a href="" th:href="@{/user/profile}" class="item">
+			<i class="fa fa-user" aria-hidden="true"></i>
+			Your Profile</a>
+		<a href=""  th:href="@{/user/add_contact}"   class="item">
+			<i class="fa fa-pencil" aria-hidden="true"></i>
+			Add Contact</a>
+		<a href="" th:href="@{/user/view-contacts/0}" class="item">
+			<i class="fa fa-eye" aria-hidden="true"></i>
+			View Contacts</a>
+		<a href="" th:href="@{/user/settings}" class="item">
+			<i class="fa fa-cogs" aria-hidden="true"></i>
+			Settings</a>
+		<div class="divider"></div>
+	</div>
+
+
+</th:block>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<th:block th:replace="~{common/links/cdn::cdn}"></th:block>
+	<title th:text="${title}"></title>
+	<link th:href="@{/css/style.css}" rel="stylesheet">
+
+	<style>
+
+        .sideBar {
+            width: 20%;
+            position: fixed;
+            height: 100%;
+            background-color: white;
+            padding-top: 60px;
+        }
+
+        .sideBar a {
+            display: block;
+            width: 100%;
+            padding: 18px 50px;
+            color: grey;
+            text-decoration: none;
+            font-size: 15px;
+            /*border: 1px red solid;*/
+        }
+
+        .sideBar a:hover {
+            background: #ced4da;
+            color: black;
+        }
+
+        .sideBar .divider {
+            height: 0.5px;
+            width: 100%;
+            background: #ced4da;
+        }
+
+        .main-content {
+            margin-left: 20%;
+        }
+
+        i {
+            margin-right: 5px;
+        }
+
+        .sideBar .crossBtn {
+            position: absolute;
+            top: 0;
+            right: 40px;
+            cursor: pointer;
+            font-size: 40px;
+        }
+
+        body {
+            background-color: #dee2e6;
+            overflow-x: hidden;
+        }
+
+        .container {
+
+        }
+
+        .formClass {
+            /*width: 90%;*/
+            height: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 35px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            background-color: white;
+            padding: 20px 90px;
+            /*border-radius: 9px;*/
+        }
+
+        .display-6 {
+            font-weight: 400;
+            font-size: 35px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .form-row {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .input-group-text {
+            width: 100%;
+            height: 100%;
+        }
+
+        .right-main-content {
+            /*margin-top: 10%;*/
+        }
+
+        .idColor {
+            font-weight: bold;
+            color: blueviolet;
+        }
+
+	</style>
+
+
+</head>
+<body>
+<!--<th:block th:replace="~{common/navigation/admin_nav/admin_navbar::navbar}"></th:block>-->
+<th:block th:replace="common/navigation/admin_nav/admin_navbar :: navbar"></th:block>
+
+<div>
+	<th:block th:replace="~{common/navigation/admin_nav/left_sidebar::leftNavbar}"></th:block>
+
+</div>
+
+<!--<th:block th:replace="~{common/navigation/admin_nav/left_sidebar::leftNavbar}"></th:block>-->
+
+
+<div class="container main-content" th:if="${#authorization.expression('isAuthenticated')}">
+
+	<div class="right-main-content">
+
+		<!--	form-->
+		<div class="formClass" id="formId">
+			<div class="heading">
+				<h5 class="display-6 text-center" style="font-weight: 400; margin-top: 7%; margin-bottom: 15px;">View
+					Contact</h5>
+
+				<div class="table">
+					<table class="table">
+						<thead>
+						<!--		 http://localhost:1008/user/view-contacts/2?fieldName=name&sortDirr=asc
+						-->
+						<tr>
+							<th scope="col">Id</th>
+							<!--							<th scope="col">Profile Photo</th>-->
+							<th scope="col">Name</th>
+							<th scope="col">Email</th>
+							<th scope="col">phone Number</th>
+
+							<!--		2 btns as Action		-->
+							<th scope="col">Action</th>
+
+						</tr>
+						</thead>
+						<tbody>
+						<!--			first [table name , {the one coming from model. }] -->
+						<tr th:each="i : ${all_Contact}">
+
+							<td class="idColor" th:text="${'SCM2020'+i.contactId}"></td>
+
+							<td>
+								<img src="" th:src="@{'/static/images/'+${i.imageUrl}}"
+								     alt="profile photo"/>
+								<span th:text="${i.name}">Name</span>
+							</td>
+
+							<td>
+
+								<a th:href="@{'/user/contact/'+${i.contactId}}">
+									<span th:text="${i.email}"> </span>
+								</a>
+							</td>
+
+							<td th:text="${i.phoneNumber}">Phone Number</td>
+
+							<!--					Edit btn-->
+							<td>
+								<form method="post" th:action="@{'/user/update-contact/' + ${i.contactId}}">
+									<button type="submit" class="btn btn-primary my-3">UPDATE</button>
+								</form>
+
+
+								<a href="#" th:onclick="|delUser('${i.contactId}', ${currentPage})|"
+								   class="btn btn-danger">
+									DELETE
+								</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+
+				<div class="pagination justify-content-center pt-2">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination">
+							<!--							when you are in 1st page[current page+1= 0+1 =1] which is equal to 0 the preivous btn should not be displayed-->
+							<li th:if="${currentPage != 0}" class="page-item"><a class="page-link"
+							                                                     th:href="@{'/user/view-contacts/'+${(currentPage - 1)}}">Previous</a>
+							</li>
+							<!--now showing total pages dynamically with the help of loop-->
+							<li th:each="i:${#numbers.sequence(1,totalPage)}"
+							    th:classappend="${currentPage==( i - 1 )?'active':''}"
+
+							    class="page-item"><a class="page-link"
+							                         th:href="@{'/user/view-contacts/'+${(i - 1)}}"><span
+									th:text="${i}"></span></a></li>
+
+							<!--	 current page is not equal to total page next btn should be displayed, which
+									means you are in 1st page[current page+1 = 0+1 =1] and total page = 5, this means you should see
+									the Next btn
+							-->
+							<li th:if="${currentPage+1!=totalPage}" class="page-item"><a class="page-link"
+							                                                             th:href="@{'/user/view-contacts/'+${(currentPage + 1)}}">Next</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+
+    function delUser(customId, currentPage) {
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this contact!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    /*swal("Poof! Your imaginary file has been deleted!", {
+						icon: "success",*/
+                    window.location = "/user/delete/" + customId +"/"+ currentPage
+                } else {
+                    swal("Your contact file is safe!");
+                }
+            });
+    }
+</script>
+</body>
+</html>

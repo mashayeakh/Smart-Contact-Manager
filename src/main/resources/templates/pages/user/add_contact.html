@@ -1,0 +1,344 @@
+	<!DOCTYPE html>
+	<html lang="en"
+	      xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<th:block th:replace="~{common/links/cdn::cdn}"></th:block>
+		<title th:text="${title}"></title>
+		<link th:href="@{/css/style.css}" rel="stylesheet">
+
+		<style>
+
+	        .sideBar {
+	            width: 20%;
+	            position: fixed;
+	            height: 100%;
+	            background-color: white;
+	            padding-top: 60px;
+	        }
+
+	        .sideBar a {
+	            display: block;
+	            width: 100%;
+	            padding: 18px 50px;
+	            color: grey;
+	            text-decoration: none;
+	            font-size: 15px;
+	            /*border: 1px red solid;*/
+	        }
+
+	        .sideBar a:hover {
+	            background: #ced4da;
+	            color: black;
+	        }
+
+	        .sideBar .divider {
+	            height: 0.5px;
+	            width: 100%;
+	            background: #ced4da;
+	        }
+
+	        .main-content {
+	            margin-left: 20%;
+	        }
+
+	        i {
+	            margin-right: 5px;
+	        }
+
+	        .sideBar .crossBtn {
+	            position: absolute;
+	            top: 0;
+	            right: 40px;
+	            cursor: pointer;
+	            font-size: 40px;
+	        }
+
+	        body {
+	            background-color: #dee2e6;
+	            overflow-x: hidden;
+	        }
+
+	        .container {
+
+	        }
+
+	        .formClass {
+	            /*width: 90%;*/
+	            height: 100%;
+	            margin-left: auto;
+	            margin-right: auto;
+	            margin-top: 35px;
+	            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	            background-color: white;
+	            padding: 20px 90px;
+	            /*border-radius: 9px;*/
+	        }
+
+	        .display-6 {
+	            font-weight: 400;
+	            font-size: 35px;
+	            margin-top: 20px;
+	            text-align: center;
+	        }
+
+	        .form-row {
+	            padding-left: 20px;
+	            padding-right: 20px;
+	        }
+
+	        .input-group-text {
+	            width: 100%;
+	            height: 100%;
+	        }
+
+	        .right-main-content{
+		        /*margin-top: 10%;*/
+	        }
+
+            .popup {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: rgba(255, 255, 255, 0.9);
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                display: none; /* Initially hidden */
+                z-index: 1000; /* Ensure it's on top of other elements */
+            }
+
+		</style>
+
+
+	</head>
+	<body>
+	<!--<th:block th:replace="~{common/navigation/admin_nav/admin_navbar::navbar}"></th:block>-->
+	<th:block th:replace="common/navigation/admin_nav/admin_navbar :: navbar"></th:block>
+
+	<div>
+		<th:block th:replace="~{common/navigation/admin_nav/left_sidebar::leftNavbar}"></th:block>
+
+	</div>
+
+	<!--<th:block th:replace="~{common/navigation/admin_nav/left_sidebar::leftNavbar}"></th:block>-->
+
+
+	<div class="container main-content" th:if="${#authorization.expression('isAuthenticated')}">
+
+		<div class="right-main-content">
+
+		<!--	form-->
+		<form class="formClass" id="formId"
+		      method="post"
+		      role="form"
+		      enctype="multipart/form-data"
+		      th:action="@{/user/process-contact}"
+		      th:object="${contact}"
+		      autocomplete="off"
+		>
+
+			<div class="popup" th:if="${success}">
+				<div class="alert alert-info" style="width: 350px;" role="alert">
+					Contact Added.
+				</div>
+			</div>
+
+			<div class="heading">
+				<!--			<img th:src="@{/images/registration.png}" alt="Registration Image" class="register-image">-->
+				<h5 class="display-6 text-center" style="font-weight: 400; margin-top: 7%; margin-bottom: 15px;">Add Contact</h5>
+			</div>
+			<div class="form-row align-items-center">
+
+				<div class="col-auto">
+					<label class="sr-only" for="inlineFormInputGroup">Name</label>
+					<div class="input-group mb-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text"><i class="fa-solid fa-plus"></i></div>
+						</div>
+						<input type="text"
+						       class="form-control"
+						       id="inlineFormInputGroup"
+						       placeholder="Name"
+						       th:value="${contact.name}"
+						       th:field="*{name}"
+						>
+					</div>
+					<p th:errors="*{name}" class="text-danger"
+					   th:if="${#fields.hasErrors('name')}">
+					</p>
+				</div>
+
+				<div class="col-auto">
+					<label class="sr-only" for="inlineFormInputGroup">Nick Name</label>
+					<div class="input-group mb-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text"><i class="fa-solid fa-user"></i></div>
+						</div>
+						<input type="text"
+						       class="form-control"
+						       id="inlineFormInputGroup2"
+						       placeholder="Nick Name"
+						       th:value="${contact.nickName}"
+						       th:field="*{nickName}"
+						>
+					</div>
+
+					<p th:errors="*{nickName}" class="text-danger"
+						   th:if="${#fields.hasErrors('nickName')}">
+						</p>
+				</div>
+				<div class="col-auto">
+					<label class="sr-only" for="inlineFormInputGroup">Email</label>
+					<div class="input-group mb-2">
+						<div class="input-group-prepend">
+							<!--						<i class="fa-solid fa-plus"></i>-->
+							<div class="input-group-text"><i class="fa-solid fa-envelope"></i></div>
+						</div>
+						<input type="email"
+						       class="form-control"
+						       id="inlineFormInputGroup3"
+						       placeholder="Email"
+						       th:value="${contact.email}"
+						       th:field="*{email}"
+						>
+					</div>
+
+					<p th:errors="*{email}" class="text-danger"
+						   th:if="${#fields.hasErrors('email')}">
+						</p>
+
+
+					<label class="sr-only" for="inlineFormInputGroup">Email</label>
+
+					<div class="input-group mb-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text"><i class="fa-solid fa-phone-flip"></i></div>
+						</div>
+						<input type="tel"
+						       class="form-control"
+						       id="inlineFormInputGroup5"
+						       placeholder="Phone Number"
+						       th:value="${contact.phoneNumber}"
+						       th:field="*{phoneNumber}"
+						>
+					</div>
+
+					<p th:errors="*{phoneNumber}" class="text-danger"
+						   th:if="${#fields.hasErrors('phoneNumber')}">
+						</p>
+
+					<div class="input-group mb-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text"><i class="fa-solid fa-briefcase"></i></div>
+						</div>
+						<input type="text"
+						       class="form-control"
+						       id="inlineFormInputGroup6"
+						       placeholder="Work"
+						       th:value="${contact.work}"
+						       th:field="*{work}"
+						>
+						<p th:errors="*{work}" class="text-danger"
+						th:if="${#fields.hasErrors('work')}">
+						</p>
+					</div>
+
+					<div class="input-group mb-2">
+
+						<div class="form-group">
+							<label class="sr-only" >Example textarea</label>
+							<textarea class="form-control"
+							          id="mytextarea"
+							          rows="5" cols="300"
+							          placeholder="Enter Contact Description"
+							          th:value="${contact.description}"
+							          th:field="*{description}"
+							></textarea>
+						</div>
+					</div>
+	<!--				<div class="mb-3">-->
+	<!--					<label for="formFile" class="form-label">Upload your file </label>-->
+	<!--					<input class="form-control"-->
+	<!--					       type="file"-->
+	<!--					       id="formFile"-->
+	<!--					       th:value="${contact.imageUrl}"-->
+	<!--					       th:field="*{imageUrl}">-->
+	<!--				</div>-->
+					<div class="mb-3">
+						<label for="formFileSm" class="sr-only form-label">Upload Image</label>
+						<input
+								class="form-control
+								form-control-sm"
+								name="profileImage"
+								id="formFileSm"
+								type="file">
+					</div>
+				</div>
+
+	<!--			<div class="col-auto">-->
+	<!--				<div class="form-check mb-2">-->
+	<!--					<input class="form-check-input" type="checkbox" id="autoSizingCheck">-->
+	<!--					<label class="form-check-label" for="autoSizingCheck">-->
+	<!--						Remember me-->
+	<!--					</label>-->
+	<!--				</div>-->
+	<!--			</div>-->
+				<div class="col-auto mt-4" style="text-align: center">
+					<button type="submit" class="btn btn-primary mb-2">Submit</button>
+				</div>
+			</div>
+
+		</form>
+	</div>
+	</div>
+
+	<script th:inline="javascript">
+        /*<![CDATA[*/
+        document.addEventListener("DOMContentLoaded", function() {
+            var popup = document.querySelector('.popup');
+
+            // Get the value of success from Thymeleaf
+            var success = /*[[${success}]]*/;
+
+            // Check if the "success" flash attribute is present
+            if (success) {
+                popup.style.display = 'block';
+
+                // Hide the popup after 3 seconds (adjust as needed)
+                setTimeout(function() {
+                    popup.style.display = 'none';
+                }, 3000);
+            }
+        });
+        /*]]>*/
+	</script>
+
+	<!-- Place the first <script> tag in your HTML's <head> -->
+	<script src="https://cdn.tiny.cloud/1/c133qoenmbm8fodjsxuqbiiy9o3d5ezsyelwlrja0s41vp0v/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+	<!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+	<script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+        });
+	</script>
+
+
+	<!--	<a th:href="@{/logout}">logout</a>-->
+
+
+
+
+	</body>
+	</html>

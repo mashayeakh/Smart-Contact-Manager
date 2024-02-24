@@ -1,0 +1,54 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #219ebc;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/*.container {*/
+/*    !* Add any styling for your container here *!*/
+/*    text-align: center; !* Adjust if needed *!*/
+/*    padding: 20px;*/
+/*}*/
+
+.navbar-nav a {
+    color: #f8edeb;
+    transition: color 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+}
+
+.navbar-nav a:hover {
+    color: #ffcc00;
+    box-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+}
+
+/*side bar*/
+/*.sideBar{*/
+/*    width: 20%;*/
+/*    background-color: #219ebc;*/
+/*}*/
+
+h1{
+    color: #219ebc;
+}
+
+
+/*main content*/
+.container{
+    margin-left: 50%;
+    border: 1px red solid;
+}

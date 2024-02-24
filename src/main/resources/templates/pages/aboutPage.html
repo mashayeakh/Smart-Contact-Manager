@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<th:block th:replace="common/links/cdn::cdn"></th:block>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	<title th:text="${title}"></title>
+</head>
+<body>
+<th:block th:replace="common/navigation/navbar::navbar"></th:block>
+<div class="container">
+	<h3 class="mt-5">About Page</h3>
+</div>
+<th:block th:replace="common/navigation/footer::footer"></th:block>
+</body>
+</html>
