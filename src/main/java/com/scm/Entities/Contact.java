@@ -50,6 +50,6 @@ public class Contact {
     //    private User user;
     @ManyToOne
     private RegisteredUser rUser;
-
-
 }
+
+

@@ -13,20 +13,20 @@
 					<form class="d-flex">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size: 20px;">
 							<li class="nav-item">
-								<a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+								<a class="nav-link active text-white" aria-current="page" th:href="@{/}">Home</a>
 							</li>
+						<!--	<li class="nav-item">
+								<a class="nav-link text-white" th:href="@{/about}">About</a>
+							</li>-->
 							<li class="nav-item">
-								<a class="nav-link" th:href="@{/about}">About</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" th:href="@{/registration}">Signup</a>
+								<a class="nav-link text-white" th:href="@{/registration}">Signup</a>
 
 							</li>
 							<li class="nav-item d-flex"
 
 								th:if="${not #authorization.expression('isAuthenticated')}">
 
-							<a class="nav-link" th:href="@{/login}">Login</a>
+							<a class="nav-link text-white" th:href="@{/login}">Login</a>
 							</li>
 						</ul>
 					</form>

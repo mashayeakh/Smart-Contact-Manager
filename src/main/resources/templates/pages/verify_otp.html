@@ -12,9 +12,9 @@
 </head>
 
 <style>
-	body{
+    body{
         background-color: #e5e5e5;
-	}
+    }
 </style>
 
 <body>
@@ -33,22 +33,25 @@
 			</div>
 
 			<div class="card">
-					<h2 class="text-center mt-3">Registered Email</h2>
-
+<!--				<h2 class="text-center mt-3"></h2>-->
 				<div class="card-body">
-					<form method="post" role="form" th:action="@{/send-otp}" class="form-horizontal">
+				<div class="alert alert-primary d-flex justify-content-center" role="alert">
 
-					<div class="form-group mb-3">
-<!--							<label class="control-label > Email</label>-->
+						We have sent OTP in your email.
+
+				</div>
+					<form action="/verify-otp" method="post">
+
+						<div class="form-group mb-3">
+							<!--							<label class="control-label > Email</label>-->
 							<input
-									type="email"
-									name="email"
+									type="text"
 									class="form-control"
-									placeholder="Enter email address" required
+									placeholder="Enter your otp" required
 							/>
 						</div>
 						<div class="form-group mb-3 d-flex justify-content-center">
-							<button type="submit" class="btn btn-warning mx-auto" >Send Otp</button>
+							<button type="submit" class="btn btn-success mx-auto" >Verify Otp</button>
 						</div>
 					</form>
 				</div>

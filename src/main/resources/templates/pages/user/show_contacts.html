@@ -149,29 +149,22 @@
 						<tr th:each="i : ${all_Contact}">
 
 							<td class="idColor" th:text="${'SCM2020'+i.contactId}"></td>
-
 							<td>
 								<img src="" th:src="@{'/static/images/'+${i.imageUrl}}"
 								     alt="profile photo"/>
 								<span th:text="${i.name}">Name</span>
 							</td>
-
 							<td>
-
 								<a th:href="@{'/user/contact/'+${i.contactId}}">
 									<span th:text="${i.email}"> </span>
 								</a>
 							</td>
-
 							<td th:text="${i.phoneNumber}">Phone Number</td>
-
 							<!--					Edit btn-->
 							<td>
 								<form method="post" th:action="@{'/user/update-contact/' + ${i.contactId}}">
 									<button type="submit" class="btn btn-primary my-3">UPDATE</button>
 								</form>
-
-
 								<a href="#" th:onclick="|delUser('${i.contactId}', ${currentPage})|"
 								   class="btn btn-danger">
 									DELETE

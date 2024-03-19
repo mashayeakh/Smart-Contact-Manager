@@ -17,6 +17,9 @@ public interface UserService {
 
     void updateUser(Contact contact);
 
+    boolean sendOtpEmail(String to, int otp);
+
+
 //    List<Contact> findContactsOrderedByPhoneNumber();
 
 }

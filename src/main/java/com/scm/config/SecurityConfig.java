@@ -19,23 +19,24 @@ public class SecurityConfig {
     @Autowired
     public UserDetailsService userDetailsService;
 
-
     @Bean
     public PasswordEncoder passwordEncoder(){
 
         return new BCryptPasswordEncoder();
     }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/","/registration",  "/forgot" , "/do_register").permitAll()
+                        .requestMatchers("/","/registration", "/forgot", "/forgot-password", "/do_register", "/send-otp").permitAll()
                         .requestMatchers("/user/**").authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
+//        auth
+//
+//    }
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/user/welcome-user")
                         .permitAll()

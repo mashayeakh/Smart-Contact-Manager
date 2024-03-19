@@ -175,6 +175,7 @@ public class WelcomeController {
 
 
         model.addAttribute("title", "View Contact");
+
         model.addAttribute("all_Contact", contacts);
 
         //2 things in pageable
